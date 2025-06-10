@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefWidth="317.0" style="-fx-background-color: #090c9b;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benton.passforge.controller.PassForgeCellController">
+   <children>
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="317.0" style="-fx-background-color: #040652; -fx-background-radius: 10; -fx-background-insets: 0, 2; -fx-border-radius: 10; -fx-border-width: 2; -fx-background-insets: 0; -fx-border-style: solid inside;">
+         <children>
+            <VBox prefHeight="39.0" prefWidth="407.0">
+               <children>
+                  <Label fx:id="lblName" prefHeight="17.0" prefWidth="235.0" textFill="WHITE">
+                     <font>
+                        <Font name="Monocraft" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblPassword" prefHeight="17.0" prefWidth="235.0" textFill="WHITE">
+                     <font>
+                        <Font name="Monocraft" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+               <HBox.margin>
+                  <Insets left="35.0" />
+               </HBox.margin>
+            </VBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="39.0" prefWidth="276.0">
+               <children>
+                  <ImageView fx:id="imgHideShow" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#onShowHideBtnClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../icons/hide.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imgCopy" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#onCopyBtnClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../icons/copy.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <ImageView fx:id="imgDelete" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#onDeleteBtnClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../icons/delete.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </HBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

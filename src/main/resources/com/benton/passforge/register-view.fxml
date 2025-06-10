@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="550.0" prefWidth="400.0" style="-fx-background-color: #090c9b;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.benton.passforge.controller.RegisterController">
+   <children>
+      <VBox fillWidth="false" minHeight="-Infinity" prefHeight="550.0" prefWidth="400.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="51.0" prefWidth="414.0" text="PassForge" textFill="#b4c5e4">
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
+               <font>
+                  <Font name="Monocraft" size="36.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="405.0" text="Register Form" textFill="#b4c5e4">
+               <font>
+                  <Font name="Monocraft" size="16.0" />
+               </font>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+            </Label>
+            <Pane prefHeight="451.0" prefWidth="370.0" style="-fx-background-color: linear-gradient(to bottom right, #1450dc, #2864f0); -fx-background-radius: 15;">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="20.0" />
+               </VBox.margin>
+               <children>
+                  <VBox layoutX="11.0" layoutY="15.0" prefHeight="394.0" prefWidth="347.0" style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgba(255,255,255,0.3), rgba(255,255,255,0.1)); -fx-background-radius: 20;">
+                     <children>
+                        <StackPane prefHeight="143.0" prefWidth="347.0">
+                           <children>
+                              <VBox prefHeight="174.0" prefWidth="317.0">
+                                 <children>
+                                    <HBox minHeight="-Infinity" prefHeight="33.0" prefWidth="273.0">
+                                       <children>
+                                          <Label text="Master Password">
+                                             <font>
+                                                <Font name="Monocraft" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <PasswordField fx:id="masterPassword">
+                                             <HBox.margin>
+                                                <Insets left="25.0" />
+                                             </HBox.margin>
+                                          </PasswordField>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Confirm Password">
+                                             <font>
+                                                <Font name="Monocraft" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <PasswordField fx:id="confirmPassword">
+                                             <HBox.margin>
+                                                <Insets left="15.0" />
+                                             </HBox.margin>
+                                          </PasswordField>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <StackPane prefHeight="70.0" prefWidth="317.0">
+                                       <children>
+                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#onRegisterButtonClick" prefHeight="25.0" prefWidth="324.0" text="Create Account">
+                                             <StackPane.margin>
+                                                <Insets top="15.0" />
+                                             </StackPane.margin>
+                                             <font>
+                                                <Font name="Monocraft" size="18.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </StackPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="15.0" right="15.0" top="20.0" />
+                           </padding>
+                        </StackPane>
+                        <Label fx:id="lblIncorrect" alignment="CENTER" prefHeight="18.0" prefWidth="350.0" textFill="RED" visible="false">
+                           <font>
+                              <Font name="Monocraft" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
