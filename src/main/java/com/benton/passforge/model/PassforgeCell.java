@@ -3,10 +3,15 @@ package com.benton.passforge.model;
 import com.benton.passforge.controller.MainController;
 import com.benton.passforge.controller.PassForgeCellController;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 
 public class PassforgeCell extends ListCell<Passwords> {
+
     private FXMLLoader loader;
+    private final MainController controller;
+
+    public PassforgeCell(MainController controller) { this.controller = controller; }
 
     @Override
     protected void updateItem(Passwords password, boolean empty) {
@@ -21,6 +26,10 @@ public class PassforgeCell extends ListCell<Passwords> {
                 try {
 
                     loader.load();
+
+                    PassForgeCellController controller = loader.getController();
+                    controller.setMainController(this.controller);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

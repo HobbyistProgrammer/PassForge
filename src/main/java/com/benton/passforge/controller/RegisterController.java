@@ -13,9 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.ResultSet;
 
 public class RegisterController {
 
@@ -23,10 +21,9 @@ public class RegisterController {
     @FXML private Label lblIncorrect;
 
     /**
-     * @Author Benton Le
+     * @author Benton Le
      * @param event
      * @throws Exception
-     * TODO: This application will create a whole new file for db if it does not currently exist. What would happen if user has a premade file named passforge.db?
      */
     @FXML
     protected void onRegisterButtonClick(ActionEvent event) throws Exception {
@@ -41,15 +38,14 @@ public class RegisterController {
             String createTableSQL = "CREATE TABLE IF NOT EXISTS users (\n" +
                     "    id              INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                     "    password_hash   TEXT    NOT NULL,\n" +
-                    "    salt            TEXT    NOT NULL\n" +
+                    "    salt            TEXT    NOT NULL" +
                     ");";
             conn.createStatement().execute(createTableSQL);
 
             createTableSQL = "CREATE TABLE IF NOT EXISTS forge (\n" +
                     "    id                 INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                     "    site               TEXT    NOT NULL,\n" +
-                    "    password_encrypted TEXT    NOT NULL,\n" +
-                    "    password_length    INTEGER NOT NULL" +
+                    "    password_encrypted TEXT    NOT NULL" +
                     ");";
             conn.createStatement().execute(createTableSQL);
 
