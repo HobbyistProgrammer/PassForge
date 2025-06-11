@@ -40,10 +40,9 @@ public class AddPasswordController {
             String encryptedPassword = EncryptionUtils.encrypt(pfPassword.getText(), key);
 
             String addPasswordSQL = String.format(
-                    "INSERT INTO forge (site, password_encrypted, password_length) VALUES ('%s', '%s', '%d')",
+                    "INSERT INTO forge (site, password_encrypted) VALUES ('%s', '%s')",
                     txtName.getText(),
-                    encryptedPassword,
-                    pfPassword.getText().length()
+                    encryptedPassword
             );
             conn.createStatement().executeUpdate(addPasswordSQL);
 

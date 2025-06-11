@@ -13,6 +13,13 @@ repositories {
     mavenCentral()
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.benton.passforge.MainApplication'
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 ext {
     junitVersion = '5.10.2'
 }
@@ -20,6 +27,7 @@ ext {
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+    modularity.inferModulePath = true
 }
 
 tasks.withType(JavaCompile) {

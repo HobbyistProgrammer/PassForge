@@ -7,6 +7,7 @@ module com.benton.passforge {
     requires jdk.jdi;
     requires java.sql;
     requires java.desktop;
+    requires jdk.compiler;
 
     opens com.benton.passforge to javafx.fxml;
     exports com.benton.passforge;
