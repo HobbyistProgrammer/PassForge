@@ -1,9 +1,7 @@
 package com.benton.passforge.controller;
 
-import com.benton.passforge.model.Passwords;
 import com.benton.passforge.util.DatabaseConnector;
 import com.benton.passforge.util.EncryptionUtils;
-import com.benton.passforge.util.PasswordUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -12,9 +10,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import javax.crypto.SecretKey;
-import java.awt.event.MouseEvent;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 
 public class AddPasswordController {
@@ -53,18 +52,24 @@ public class AddPasswordController {
         }
     }
 
+    /**
+     * @description This method obtains user specific salt to be used for AES encryption/decryption on other passwords.
+     * @param conn
+     * @return user account salt
+     * @throws SQLException
+     */
     public String getUserSalt(Connection conn) throws SQLException {
-        String passwordList = "SELECT * FROM users";
+        String query = "SELECT salt FROM users LIMIT 1";
 
-        String salt = "", password = "";
+        try (Statement statement = conn.createStatement();
+             ResultSet rs = statement.executeQuery(query)) {
 
-        var rs = conn.createStatement().executeQuery(passwordList);
-        while(rs.next()) {
-            salt = rs.getString("salt");
-            password = rs.getString("password_hash");
+            if (rs.next()) {
+                return rs.getString("salt");
+            } else {
+                return null;
+            }
         }
-
-        return salt;
     }
 
     public void setMasterPassword(String masterPassword) {
