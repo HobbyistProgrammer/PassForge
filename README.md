@@ -3,7 +3,6 @@
 **PassForge** is a secure and modern JavaFX-based password manager built using Java 17, SQLite, and FormsFX. It features a smooth, intuitive UI and modular structure, allowing for easy maintenance and extension; as well as utilizing PBKDF2WithHmacSHA256 with random salt to store the master password and AES Secret Key with PBKDF2 for encrypting each added password.
 
 ---
-
 ## 🖥 Features
 
 - 🗝 Secure password storage with local SQLite DB
@@ -21,19 +20,16 @@
 
 ---
 
-```bash
-git clone https://github.com/HobbyistProgrammer/PassForge.git
-cd PassForge
-./gradlew run
-```
-
+## ⚙️ Setup & Development
+- To get started quickly without the extra steps go to the link below -> download the installer.
+- Follow the installation wizard and a windows shortcut of PassForge will be made on your desktop.
+- Next... No other steps, its as easy as that.
+  
 ## 📦 Downloads
 
 | Version | Platform | Type | Download |
 |---------|----------|------|----------|
 | 1.0.0   | Windows  | Installer (.exe) | [Download](https://github.com/HobbyistProgrammer/PassForge/blob/main/installer/PassForgeInstaller.exe) |
-
-> ⚠️ Java 17+ required for the portable version.
 
 ---
 
@@ -44,6 +40,12 @@ cd PassForge
 | 1.0.0   | 2025-06-11 | Initial release          |
 
 ---
+
+```bash
+git clone https://github.com/HobbyistProgrammer/PassForge.git
+cd PassForge
+./gradlew run
+```
 
 ## 🛠 Built With
 
