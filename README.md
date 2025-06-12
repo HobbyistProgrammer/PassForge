@@ -41,13 +41,7 @@
 
 ---
 
-```bash
-git clone https://github.com/HobbyistProgrammer/PassForge.git
-cd PassForge
-./gradlew run
-```
-
-## 🛠 Built With
+## 🛠 Tools and Libraries used
 
 - Java 17 or JDK 22
 - JavaFX 17.0.6
