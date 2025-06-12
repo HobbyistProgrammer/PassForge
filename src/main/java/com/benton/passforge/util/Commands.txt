@@ -1,7 +1,12 @@
-This cmd command packages app into an installer .exe:
+List of Commands:
 
+Do this steps before this command can be executed:
+- Make sure to build project and go to build/libs/PassForge-1.0-SNAPSHOT.jar and move to jars folder.
+    - Jars folder should have: sqlite-jdbc-3.49.0.0.jar and PassForge-1.0-SNAPSHOT.jar.
+
+This cmd command packages app into an installer .exe:
 jpackage `
---input build/libs `
+--input jars `
 --name PassForge `
 --main-jar PassForge-1.0-SNAPSHOT.jar `
 --main-class com.benton.passforge.MainApplication `

@@ -14,6 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
+import java.sql.Statement;
 
 public class RegisterController {
 
@@ -34,20 +35,21 @@ public class RegisterController {
             String hash = PasswordUtils.hashPassword(masterPassword.getText().toCharArray(), salt); // Hashed password
 
             Connection conn = DatabaseConnector.connect();
+            Statement stmt = conn.createStatement();
 
             String createTableSQL = "CREATE TABLE IF NOT EXISTS users (\n" +
                     "    id              INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                     "    password_hash   TEXT    NOT NULL,\n" +
                     "    salt            TEXT    NOT NULL" +
                     ");";
-            conn.createStatement().execute(createTableSQL);
+            stmt.execute(createTableSQL);
 
             createTableSQL = "CREATE TABLE IF NOT EXISTS forge (\n" +
                     "    id                 INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                     "    site               TEXT    NOT NULL,\n" +
                     "    password_encrypted TEXT    NOT NULL" +
                     ");";
-            conn.createStatement().execute(createTableSQL);
+            stmt.execute(createTableSQL);
 
             // Check to see if table exists to avoid multiple inserts or dummy data.
 //            String checkSQL = "SELECT COUNT(*) FROM users WHERE name = 'admin'";
@@ -59,7 +61,7 @@ public class RegisterController {
 //            }
 
             String insertSQL = String.format("INSERT INTO users (password_hash, salt) VALUES ('%s', '%s')", hash, salt);
-            conn.createStatement().executeUpdate(insertSQL);
+            stmt.executeUpdate(insertSQL);
 
             System.out.println("Inserted");
 

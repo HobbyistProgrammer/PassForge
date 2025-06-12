@@ -11,16 +11,19 @@ public class DatabaseConnector {
         File file = new File("C:\\Users\\" + username + "\\Documents\\", "passforge.db");
 
         try {
-
-            if(file.createNewFile()) {
+            if (file.createNewFile()) {
                 System.out.println("DB Created");
             }
-            String url ="jdbc:sqlite:" + file.getAbsolutePath();
+            System.out.println("Classpath:");
+            System.out.println(System.getProperty("java.class.path"));
 
+            String url = "jdbc:sqlite:" + file.getAbsolutePath();
+            System.out.println("Connecting to: " + url);
+            Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection(url);
             System.out.println("Connected to Database");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
         return conn;
