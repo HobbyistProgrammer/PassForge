@@ -2,7 +2,6 @@ package com.benton.passforge.controller;
 
 import com.benton.passforge.model.Passwords;
 import com.benton.passforge.util.DatabaseConnector;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;

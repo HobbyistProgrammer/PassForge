@@ -10,3 +10,4 @@ TODO LIST:
 TODO *Later Possible Features*:
     - Implement cloud saving (will save each update on passwords in the cloud).
     - UI/UX overhaul.
+    - Toolbar to change styles.

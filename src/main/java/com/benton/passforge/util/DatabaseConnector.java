@@ -14,14 +14,14 @@ public class DatabaseConnector {
             if (file.createNewFile()) {
                 System.out.println("DB Created");
             }
-            System.out.println("Classpath:");
-            System.out.println(System.getProperty("java.class.path"));
+            // System.out.println("Classpath:");
+            // System.out.println(System.getProperty("java.class.path"));
 
             String url = "jdbc:sqlite:" + file.getAbsolutePath();
-            System.out.println("Connecting to: " + url);
-            Class.forName("org.sqlite.JDBC");
+            // System.out.println("Connecting to: " + url);
+            Class.forName("org.sqlite.JDBC"); // Forces runtime app to include.
             conn = DriverManager.getConnection(url);
-            System.out.println("Connected to Database");
+            // System.out.println("Connected to Database");
         } catch (Exception e) {
             e.printStackTrace();
         }

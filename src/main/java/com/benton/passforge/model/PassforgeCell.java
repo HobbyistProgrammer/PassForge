@@ -3,7 +3,6 @@ package com.benton.passforge.model;
 import com.benton.passforge.controller.MainController;
 import com.benton.passforge.controller.PassForgeCellController;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 
 public class PassforgeCell extends ListCell<Passwords> {

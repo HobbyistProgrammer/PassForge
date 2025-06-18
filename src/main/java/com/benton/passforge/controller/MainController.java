@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -26,6 +27,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import javax.crypto.SecretKey;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -43,6 +45,31 @@ public class MainController {
     @FXML private AnchorPane rootPane;
     @FXML private Button btnAddPassword, btnUnlockPassword;
     @FXML private Label lblError;
+
+
+    /**
+     * @description: purpose of this function is to check if .db user exists on startup.
+     */
+    @FXML
+    protected void initialize() throws IOException {
+
+        String username = System.getProperty("user.name"); // This code gets the name of user on the Desktop
+        File file = new File("C:\\Users\\" + username + "\\Documents\\", "passforge.db");
+
+        if (file.length() == 0) {
+            file.delete();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("register-view.fxml"));
+            Stage stage = new Stage();
+
+            stage.setScene(new Scene(loader.load()));
+            stage.show();
+
+            // Open register page
+            Stage currStage = (Stage) rootPane.getScene().getWindow();
+            currStage.close();
+        }
+    }
 
     @FXML
     protected void onUnlockButtonClicked() throws Exception {

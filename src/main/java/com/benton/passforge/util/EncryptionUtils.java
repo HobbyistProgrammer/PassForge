@@ -11,7 +11,7 @@ import java.util.Base64;
 
 public class EncryptionUtils {
 
-    private static final int ITERATIONS = 100_000;
+    private static final int ITERATIONS = 100_000; // Can change this to a higher number 600_000 but will have to reset .db
     private static final int KEY_LENGTH = 256;
     private static final int IV_LENGTH = 16;
 
