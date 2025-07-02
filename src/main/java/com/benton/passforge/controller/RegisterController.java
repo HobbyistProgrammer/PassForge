@@ -16,6 +16,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -62,7 +63,6 @@ public class RegisterController {
             stmt.executeUpdate(insertSQL);
 
             // System.out.println("Inserted");
-
             conn.close();
 
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();

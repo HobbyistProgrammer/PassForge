@@ -1,13 +1,17 @@
 package com.benton.passforge.controller;
 
 import com.benton.passforge.MainApplication;
+import com.benton.passforge.model.LockoutManager;
 import com.benton.passforge.model.PassforgeCell;
 import com.benton.passforge.model.Passwords;
 import com.benton.passforge.util.DatabaseConnector;
 import com.benton.passforge.util.EncryptionUtils;
 import com.benton.passforge.util.PasswordUtils;
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -29,14 +33,18 @@ import javafx.util.Duration;
 import javax.crypto.SecretKey;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.net.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.locks.Lock;
 
 public class MainController {
 
@@ -46,6 +54,8 @@ public class MainController {
     @FXML private Button btnAddPassword, btnUnlockPassword;
     @FXML private Label lblError;
 
+    private LockoutManager.LockoutData lockoutData;
+    private Timeline lockoutTimer;
 
     /**
      * @description: purpose of this function is to check if .db user exists on startup.
@@ -53,49 +63,113 @@ public class MainController {
     @FXML
     protected void initialize() throws IOException {
 
-        String username = System.getProperty("user.name"); // This code gets the name of user on the Desktop
-        File file = new File("C:\\Users\\" + username + "\\Documents\\", "passforge.db");
+        Path appDataDir = Paths.get(System.getProperty("user.home"), ".passforge");
+        Path dbPath = appDataDir.resolve("passforge.db");
 
-        if (file.length() == 0) {
-            file.delete();
+        File file = dbPath.toFile();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("register-view.fxml"));
-            Stage stage = new Stage();
+        // String userHome = System.getProperty("user.home");
+        // File file = new File(userHome + File.separator + "Documents", "passforge.db");
 
-            stage.setScene(new Scene(loader.load()));
-            stage.show();
+        if (!file.exists() || file.length() == 0) {
+            if(file.exists()) {
+                file.delete(); // delete empty db.
+            }
 
-            // Open register page
-            Stage currStage = (Stage) rootPane.getScene().getWindow();
-            currStage.close();
+            Platform.runLater(() -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(MainController.class.getResource("/com/benton/passforge/register-view.fxml"));
+                    Stage stage = new Stage();
+
+                    stage.setScene(new Scene(loader.load()));
+                    stage.show();
+
+                    // Open register page
+                    Stage currStage = (Stage) rootPane.getScene().getWindow();
+                    currStage.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        } else {
+            // System.out.println("Loading Lockout on Initialize");
+            lockoutData = LockoutManager.load();
+
+            // System.out.println(lockoutData.failedAttempts + ", " + lockoutData.lockoutEndTime);
+
+            if(System.currentTimeMillis() < lockoutData.lockoutEndTime) {
+                startLockoutTimer();
+            }
         }
+    }
+
+    private void startLockoutTimer() {
+        btnUnlockPassword.setDisable(true);
+
+        lockoutTimer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+
+            long remainingTime = lockoutData.lockoutEndTime - System.currentTimeMillis();
+            if(remainingTime <= 0) {
+                btnUnlockPassword.setDisable(false);
+                lockoutTimer.stop();
+                lockoutData.failedAttempts = 0;
+                lockoutData.lockoutEndTime = 0;
+                LockoutManager.save(lockoutData);
+            } else {
+                lblError.setText("Locked out: " + (remainingTime / 1000) + "s remaining");
+                lblError.setVisible(true);
+                btnUnlockPassword.setDisable(true);
+            }
+        }));
+        lockoutTimer.setCycleCount(Timeline.INDEFINITE);
+        lockoutTimer.play();
     }
 
     @FXML
     protected void onUnlockButtonClicked() throws Exception {
-        Connection conn = DatabaseConnector.connect();
 
-        String selectSQL = "SELECT * FROM users";
+        if(System.currentTimeMillis() < lockoutData.lockoutEndTime) {
+            lblError.setText("Locked out. Try again later");
+        } else {
 
-        var rs = conn.createStatement().executeQuery(selectSQL);
-        boolean match = false;
+            Connection conn = DatabaseConnector.connect();
+            String selectSQL = "SELECT * FROM users";
 
-        while(rs.next()) {
-            match = PasswordUtils.verifyPassword(unlockPassword.getText().toCharArray(), rs.getString("password_hash"), rs.getString("salt"));
+            var rs = conn.createStatement().executeQuery(selectSQL);
+            boolean match = false;
+
+            while(rs.next()) {
+                match = PasswordUtils.verifyPassword(unlockPassword.getText().toCharArray(), rs.getString("password_hash"), rs.getString("salt"));
+            }
+
+            if(match) {
+                refreshList();
+
+                lockoutData.lockoutEndTime = 0;
+                lockoutData.failedAttempts = 0;
+                LockoutManager.save(lockoutData);
+
+                unlockPassword.setDisable(true);
+                btnAddPassword.setDisable(false);
+                btnUnlockPassword.setDisable(true);
+                lblError.setVisible(false);
+            }
+            else {
+                lockoutData.failedAttempts++;
+                lblError.setText("Incorrect Master Password.");
+                lblError.setVisible(true);
+
+                if (lockoutData.failedAttempts >= 5) {
+                    lockoutData.lockoutEndTime = System.currentTimeMillis() + 900_000; // 15 Minutes Lockout
+                    lblError.setText("Too many failed attempts.\nLocked out for 15 Minutes");
+                    btnUnlockPassword.setDisable(true);
+                }
+
+                LockoutManager.save(lockoutData);
+            }
+
+            conn.close();
         }
-
-        if(match) {
-            refreshList();
-            unlockPassword.setDisable(true);
-            btnAddPassword.setDisable(false);
-            btnUnlockPassword.setDisable(true);
-            lblError.setVisible(false);
-        }
-        else {
-            lblError.setVisible(true);
-        }
-
-        conn.close();
     }
 
     @FXML

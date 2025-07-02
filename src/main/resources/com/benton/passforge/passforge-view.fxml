@@ -23,7 +23,7 @@
                   <Font name="Monocraft" size="36.0" />
                </font>
             </Label>
-            <VBox alignment="CENTER" prefHeight="103.0" prefWidth="406.0">
+            <VBox alignment="CENTER" prefHeight="198.0" prefWidth="400.0">
                <children>
                   <Label text="Master Password" textFill="WHITE">
                      <font>
@@ -50,7 +50,7 @@
                         <Insets top="10.0" />
                      </padding>
                   </HBox>
-                  <Label fx:id="lblError" text="Incorrect Master Password" textFill="RED" visible="false">
+                  <Label fx:id="lblError" alignment="TOP_CENTER" prefHeight="92.0" prefWidth="330.0" text="Incorrect Master Password" textFill="RED" visible="false">
                      <font>
                         <Font name="Monocraft" size="14.0" />
                      </font>
@@ -62,7 +62,7 @@
             </VBox>
             <Pane prefHeight="30.0" prefWidth="416.0">
                <children>
-                  <Button disable="true" fx:id="btnAddPassword" alignment="CENTER" contentDisplay="RIGHT" layoutX="45.0" mnemonicParsing="false" onAction="#onAddNewPasswordButtonClicked" style="-fx-background-color: #37a6ff;" text="+ Add New Password">
+                  <Button fx:id="btnAddPassword" alignment="CENTER" contentDisplay="RIGHT" disable="true" layoutX="45.0" mnemonicParsing="false" onAction="#onAddNewPasswordButtonClicked" style="-fx-background-color: #37a6ff;" text="+ Add New Password">
                      <font>
                         <Font name="Monocraft" size="13.0" />
                      </font>
